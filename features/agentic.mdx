@@ -7,19 +7,20 @@ Agentic mode gives LLMs tools to explore your codebase, then propose file edits 
 
 ## Usage
 
-Use the `@agent` syntax to trigger agentic mode:
+The TUI runs in agentic mode by default. Just type your task:
 
 ```bash
-@claude fix the bug in src/utils.ts
-@gemini add error handling to api/routes.ts
-@ollama create a hello world script
+fix the bug in src/utils.ts
+add error handling to api/routes.ts
+create a hello world script
 ```
 
-Or use commands:
+Set which agent handles your tasks:
 
 ```bash
-/plan @claude refactor the auth system      # Plan only (no execution)
-/build @claude implement the login form     # Full implementation with tools
+/agent claude    # Use Claude for agentic tasks
+/agent gemini    # Use Gemini
+/agent ollama    # Use local Ollama
 ```
 
 ## Available Tools
@@ -45,15 +46,6 @@ Every tool call shows a permission prompt:
 
 <Note>Claude and Ollama fully respect permission prompts. Gemini and Codex have built-in file reading that may bypass prompts.</Note>
 
-## Plan vs Build Mode
-
-| Mode | Description |
-|------|-------------|
-| **Plan** | LLM analyzes and describes approach, no file changes |
-| **Build** | LLM explores and edits with full tool access |
-
-Toggle with `Tab` in the TUI.
-
 ## Live Tool Activity
 
 When the LLM uses tools, you see:
@@ -69,7 +61,7 @@ Press `Ctrl+S` to expand/collapse full output.
 
 <Steps>
   <Step title="Describe the task">
-    Use `@agent` syntax: `@claude fix the login bug`
+    Type your request in the TUI
   </Step>
   <Step title="LLM explores">
     The LLM uses view, glob, grep to understand your codebase
@@ -90,12 +82,12 @@ Press `Ctrl+S` to expand/collapse full output.
 
 ## Consensus → Agentic Workflow
 
-Run consensus first, then continue with an agent:
+Run consensus first, then continue with the agent:
 
 ```bash
 /consensus claude,gemini "best approach for auth"
 # Choose "Continue"
-@claude implement this    # Has consensus context
+# Type your follow-up — has consensus context
 ```
 
 The consensus result is automatically injected as context.
@@ -104,8 +96,8 @@ The consensus result is automatically injected as context.
 
 | Agent | Agentic Support |
 |-------|-----------------|
-| Claude | ✅ Full support |
-| Ollama | ✅ Full support |
-| Gemini | ⚠️ Auto-reads files (bypasses prompts) |
-| Codex | ⚠️ Auto-reads files (bypasses prompts) |
-| Mistral | ⚠️ Inconsistent |
+| Claude | Full support |
+| Ollama | Full support |
+| Gemini | Auto-reads files (bypasses prompts) |
+| Codex | Auto-reads files (bypasses prompts) |
+| Mistral | Inconsistent |
