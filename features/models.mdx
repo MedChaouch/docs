@@ -1,0 +1,83 @@
+---
+title: "Model Selection"
+description: "Choose and configure models for each agent"
+---
+
+PuzldAI lets you pick specific models for each agent. Use aliases like `sonnet`, `opus`, `haiku` or full model names.
+
+## Quick Commands
+
+### TUI
+
+```bash
+/model                     # Open model selection panel
+/model claude opus         # Set Claude to Opus
+/model gemini flash        # Set Gemini to Flash
+/model ollama llama3.2     # Set Ollama model
+```
+
+### CLI
+
+```bash
+puzldai model show              # Show current models
+puzldai model list              # List all available models
+puzldai model list claude       # List models for specific agent
+puzldai model set claude opus   # Set model for an agent
+puzldai model clear claude      # Reset to CLI default
+```
+
+## Per-Task Override
+
+Override the model for a single task without changing settings:
+
+```bash
+puzldai run "task" -m opus              # Use Opus for this task
+puzldai run "task" -a claude -m haiku   # Use Claude with Haiku
+puzldai agent -a claude -m opus         # Interactive mode with Opus
+```
+
+## Available Models
+
+### Claude
+
+| Alias | Model |
+|-------|-------|
+| `opus` | claude-opus-4 |
+| `sonnet` | claude-sonnet-4 |
+| `haiku` | claude-haiku-3.5 |
+
+### Gemini
+
+| Alias | Model |
+|-------|-------|
+| `pro` | gemini-2.5-pro |
+| `flash` | gemini-2.5-flash |
+| `thinking` | gemini-2.0-flash-thinking |
+
+### Ollama
+
+Any model installed locally:
+
+```bash
+ollama list                    # See installed models
+/model ollama llama3.2         # Use specific model
+/model ollama deepseek-r1      # Use DeepSeek
+```
+
+## Model Selection Panel
+
+The `/model` command opens an interactive panel:
+
+- Browse available models per agent
+- See which model is currently active
+- Quick-switch between models
+
+## Best Practices
+
+| Use Case | Recommended |
+|----------|-------------|
+| Complex reasoning | `opus`, `pro` |
+| Fast responses | `haiku`, `flash` |
+| Code generation | `sonnet`, `flash` |
+| Local/private | `ollama` |
+| Cost-conscious | `haiku`, `ollama` |
