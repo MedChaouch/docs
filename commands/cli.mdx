@@ -1,0 +1,425 @@
+---
+title: "CLI Commands"
+description: "Command line interface reference"
+---
+
+## Basic Commands
+
+### puzldai
+
+Launch interactive TUI (default when no arguments).
+
+```bash
+puzldai
+puzldai tui    # Same as above
+```
+
+### puzldai run
+
+Run a task with the best available agent.
+
+```bash
+puzldai run <task> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-a, --agent <agent>` | Force specific agent (claude, gemini, codex, ollama) |
+| `-m, --model <model>` | Override model (e.g., sonnet, opus, gemini-2.5-flash) |
+| `-P, --pipeline <steps>` | Run as pipeline (e.g., "gemini:analyze,claude:code") |
+| `-T, --template <name>` | Use a saved pipeline template |
+| `-i, --interactive` | Prompt before each step in pipeline mode |
+
+**Examples:**
+```bash
+puzldai run "explain recursion"
+puzldai run "build an API" -a claude
+puzldai run "task" -m opus
+puzldai run "build a logger" -P "gemini:analyze,claude:code,gemini:review"
+puzldai run "task" -T code-review -i
+```
+
+### puzldai compare
+
+Compare responses from multiple agents.
+
+```bash
+puzldai compare <prompt> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-a, --agents <agents>` | Comma-separated agents (default: claude,gemini) |
+| `-s, --sequential` | Run agents sequentially instead of parallel |
+| `-p, --pick` | Have an LLM pick the best response |
+
+**Examples:**
+```bash
+puzldai compare "best error handling practices"
+puzldai compare "task" -a claude,gemini,codex
+puzldai compare "task" -s -p
+```
+
+### puzldai autopilot
+
+Generate and optionally execute an AI-planned workflow.
+
+```bash
+puzldai autopilot <task> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-x, --execute` | Execute the plan after generating |
+| `-i, --interactive` | Prompt before each step (requires --execute) |
+| `-p, --planner <agent>` | Agent to use for planning (default: ollama) |
+
+**Examples:**
+```bash
+puzldai autopilot "build a todo app"
+puzldai autopilot "task" -x
+puzldai autopilot "task" -x -i -p claude
+```
+
+### puzldai agent
+
+Interactive agent mode.
+
+```bash
+puzldai agent [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-a, --agent <agent>` | Force specific agent (default: auto) |
+| `-m, --model <model>` | Override model for the agent |
+
+**Examples:**
+```bash
+puzldai agent
+puzldai agent -a claude -m opus
+```
+
+### puzldai check
+
+Check available agents and dependencies.
+
+```bash
+puzldai check
+```
+
+---
+
+## Collaboration Commands
+
+### puzldai correct
+
+Cross-agent correction: one produces, another reviews.
+
+```bash
+puzldai correct <task> --producer <agent> --reviewer <agent> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `--producer <agent>` | Agent to produce initial output (required) |
+| `--reviewer <agent>` | Agent to review and critique (required) |
+| `-f, --fix` | Have producer fix issues after review |
+
+**Examples:**
+```bash
+puzldai correct "write a sorting algorithm" --producer claude --reviewer gemini
+puzldai correct "task" --producer claude --reviewer gemini --fix
+```
+
+### puzldai debate
+
+Multi-agent debate on a topic.
+
+```bash
+puzldai debate <topic> -a <agents> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-a, --agents <agents>` | Comma-separated agents to debate (required) |
+| `-r, --rounds <n>` | Number of debate rounds (default: 2) |
+| `-m, --moderator <agent>` | Agent to synthesize conclusion |
+
+**Examples:**
+```bash
+puzldai debate "microservices vs monolith" -a claude,gemini
+puzldai debate "topic" -a claude,gemini -r 3 -m ollama
+```
+
+### puzldai consensus
+
+Build consensus among multiple agents.
+
+```bash
+puzldai consensus <task> -a <agents> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-a, --agents <agents>` | Comma-separated agents (required) |
+| `-r, --rounds <n>` | Number of voting rounds (default: 2) |
+| `-s, --synthesizer <agent>` | Agent to synthesize final result |
+
+**Examples:**
+```bash
+puzldai consensus "best database choice" -a claude,gemini,ollama
+puzldai consensus "task" -a claude,gemini -r 3 -s claude
+```
+
+---
+
+## Model Commands
+
+### puzldai model show
+
+Show current model settings for all agents.
+
+```bash
+puzldai model show
+```
+
+### puzldai model list
+
+List available models.
+
+```bash
+puzldai model list [agent]
+```
+
+### puzldai model set
+
+Set model for an agent.
+
+```bash
+puzldai model set <agent> <model>
+```
+
+**Examples:**
+```bash
+puzldai model set claude opus
+puzldai model set gemini gemini-2.0-flash
+```
+
+### puzldai model clear
+
+Clear model override (use CLI default).
+
+```bash
+puzldai model clear <agent>
+```
+
+---
+
+## Template Commands
+
+### puzldai template list
+
+List all available templates.
+
+```bash
+puzldai template list
+```
+
+### puzldai template show
+
+Show template details.
+
+```bash
+puzldai template show <name>
+```
+
+### puzldai template create
+
+Create a new template.
+
+```bash
+puzldai template create <name> -P <steps> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-P, --pipeline <steps>` | Pipeline steps (required) |
+| `-d, --description <desc>` | Template description |
+
+**Example:**
+```bash
+puzldai template create code-review -P "gemini:analyze,claude:code,gemini:review" -d "Code review pipeline"
+```
+
+### puzldai template edit
+
+Edit an existing template.
+
+```bash
+puzldai template edit <name> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-P, --pipeline <steps>` | New pipeline steps |
+| `-d, --description <desc>` | New description |
+
+### puzldai template delete
+
+Delete a template.
+
+```bash
+puzldai template delete <name>
+```
+
+---
+
+## Session Commands
+
+### puzldai session list
+
+List all sessions.
+
+```bash
+puzldai session list [agent]
+```
+
+### puzldai session new
+
+Create a new session.
+
+```bash
+puzldai session new [agent]
+```
+
+### puzldai session info
+
+Show session details.
+
+```bash
+puzldai session info <id>
+```
+
+### puzldai session delete
+
+Delete a session.
+
+```bash
+puzldai session delete <id>
+```
+
+### puzldai session clear
+
+Clear session history (keep session, remove messages).
+
+```bash
+puzldai session clear <id>
+```
+
+---
+
+## Index Commands
+
+### puzldai index
+
+Index codebase for semantic search.
+
+```bash
+puzldai index [path] [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-q, --quick` | Quick index (skip embedding) |
+| `-c, --clear` | Clear the code index |
+| `-s, --stats` | Show index statistics |
+| `-S, --search <query>` | Search indexed code |
+| `-C, --context <task>` | Get relevant code context for a task |
+| `--config` | Show project configuration details |
+| `-g, --graph` | Show dependency graph summary |
+| `-m, --max-files <n>` | Maximum files to index (default: 1000) |
+
+**Examples:**
+```bash
+puzldai index
+puzldai index --quick
+puzldai index --search "handleLogin"
+puzldai index --context "fix auth bug"
+puzldai index --config
+puzldai index --graph
+```
+
+---
+
+## Observe Commands
+
+### puzldai observe summary
+
+Show observation summary.
+
+```bash
+puzldai observe summary [-a <agent>]
+```
+
+### puzldai observe list
+
+List recent observations.
+
+```bash
+puzldai observe list [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-a, --agent <agent>` | Filter by agent |
+| `-n, --limit <n>` | Number to show (default: 10) |
+
+### puzldai observe export
+
+Export observations to file.
+
+```bash
+puzldai observe export <output> [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-f, --format <format>` | Output format: jsonl, json, csv (default: jsonl) |
+| `-a, --agent <agent>` | Filter by agent |
+| `-n, --limit <n>` | Max records (default: 10000) |
+| `-t, --type <type>` | Export type: observations, preferences |
+| `--no-content` | Exclude content (metadata only) |
+
+**Examples:**
+```bash
+puzldai observe export data.jsonl
+puzldai observe export prefs.jsonl -t preferences
+puzldai observe export data.csv -f csv -a claude
+```
+
+---
+
+## Server Commands
+
+### puzldai serve
+
+Start the API server.
+
+```bash
+puzldai serve [options]
+```
+
+| Option | Description |
+|--------|-------------|
+| `-p, --port <port>` | Port to listen on (default: 3000) |
+| `-H, --host <host>` | Host to bind to (default: 0.0.0.0) |
+| `-w, --web` | Also start ttyd web terminal |
+| `-t, --terminal-port <port>` | Terminal port (default: 3001) |
+
+**Examples:**
+```bash
+puzldai serve
+puzldai serve -p 8080
+puzldai serve -w -t 3001
+```

@@ -44,7 +44,8 @@
           {
             "group": "Commands",
             "pages": [
-              "commands/chat",
+              "commands/tui",
+              "commands/cli",
               "commands/workflows",
               "commands/settings"
             ]
