@@ -1,0 +1,119 @@
+---
+title: "Pipeline Mode"
+description: "Chain models together for multi-step workflows"
+---
+
+Pipeline mode chains multiple AI models together, where each step builds on the output of the previous step. This enables sophisticated multi-step workflows.
+
+## Usage
+
+```bash
+/pipeline "<agent:action,agent:action,...>" "<prompt>"
+```
+
+### Examples
+
+```bash
+# Analyze → Code → Review pipeline
+/pipeline "gemini:analyze,claude:code,codex:review" "Build a rate limiter"
+
+# Research → Summarize pipeline
+/pipeline "claude:analyze,gemini:summarize" "Explain quantum computing"
+
+# Code → Test → Fix pipeline
+/pipeline "claude:code,codex:test,claude:fix" "Create a sorting function"
+```
+
+## Available Actions
+
+| Action | Description |
+|--------|-------------|
+| `analyze` | Analyze the task and provide insights |
+| `code` | Write code for the task |
+| `review` | Review and suggest improvements |
+| `fix` | Fix issues identified in previous step |
+| `test` | Write tests for the code |
+| `summarize` | Summarize the content concisely |
+| `prompt` | Generic prompt (default) |
+
+## How It Works
+
+<Steps>
+  <Step title="Step 1">
+    First agent receives the original prompt and performs its action.
+  </Step>
+  <Step title="Step 2">
+    Second agent receives the original prompt PLUS the output from step 1.
+  </Step>
+  <Step title="Step N">
+    Each subsequent step receives all previous context, building on prior work.
+  </Step>
+</Steps>
+
+## Saved Workflows
+
+Save frequently used pipelines as workflows:
+
+```bash
+# Save a workflow
+/workflow save code-review "gemini:analyze,claude:code,codex:review"
+
+# Run a saved workflow
+/workflow code-review "Build user authentication"
+
+# List saved workflows
+/workflows
+```
+
+## Interactive Mode
+
+Enable interactive mode to pause between steps:
+
+```bash
+/interactive    # Toggle interactive mode
+```
+
+When enabled, you can review each step's output before proceeding.
+
+## Example Workflow
+
+```
+Pipeline: gemini:analyze → claude:code → codex:review
+
+Step 1: gemini [analyze]
+━━━━━━━━━━━━━━━━━━━━━━━
+Analysis: The rate limiter should use a token bucket algorithm...
+
+Step 2: claude [code]
+━━━━━━━━━━━━━━━━━━━━━━
+```typescript
+class RateLimiter {
+  private tokens: number;
+  ...
+}
+```
+
+Step 3: codex [review]
+━━━━━━━━━━━━━━━━━━━━━━
+Review: The implementation looks good. Suggestions:
+1. Add thread safety...
+```
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `Escape` | Hide view (keeps running) |
+| `Ctrl+E` | Return to pipeline view |
+| `Ctrl+C` | Cancel pipeline |
+| `Space` | Continue to next step (interactive mode) |
+
+## Tips
+
+<Tip>
+**Match models to tasks** - Use models that excel at each step (e.g., Claude for code, Gemini for analysis).
+</Tip>
+
+<Tip>
+**Keep pipelines focused** - 3-4 steps is usually optimal. Too many steps can compound errors.
+</Tip>

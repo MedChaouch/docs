@@ -1,0 +1,55 @@
+---
+title: "Memory & RAG"
+description: "Persistent memory with semantic retrieval"
+---
+
+PuzldAI includes a memory system that stores conversations, decisions, and code patterns for future retrieval.
+
+## Memory Types
+
+| Type | Description |
+|------|-------------|
+| `conversation` | Q&A pairs from sessions |
+| `decision` | Accepted file edits and explanations |
+| `code` | Code snippets and patterns |
+| `pattern` | Reusable solutions |
+
+## How It Works
+
+1. **Automatic storage** — When you accept file edits in agentic mode, the decision is stored
+2. **Semantic search** — New prompts are matched against stored memories
+3. **Context injection** — Relevant memories are injected into prompts
+
+## Storage
+
+Memory uses SQLite FTS5 (zero dependencies):
+
+```
+~/.puzldai/memory.db
+```
+
+## Embedding Models
+
+When Ollama is available, PuzldAI uses embeddings for better semantic search:
+
+| Model | Notes |
+|-------|-------|
+| `nomic-embed-text` | Recommended |
+| `mxbai-embed-large` | Alternative |
+| `all-minilm` | Lightweight |
+
+If no embedding model is available, FTS5 full-text search is used.
+
+## Sessions
+
+Chat history is persisted between sessions:
+
+```bash
+# TUI
+/session                  # Start new session
+/resume                   # Resume previous session
+
+# CLI
+puzldai session list      # List sessions
+puzldai session new       # Create new session
+```

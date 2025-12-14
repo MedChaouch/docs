@@ -1,0 +1,105 @@
+---
+title: "Configuration"
+description: "Configure models, routing, and preferences"
+---
+
+## How Authentication Works
+
+PuzldAI doesn't handle your AI credentials. It orchestrates the official CLI tools you already have installed:
+
+| What PuzldAI Does | What PuzldAI Doesn't Do |
+|-------------------|-------------------------|
+| Calls `claude`, `gemini`, `codex` binaries | Store your API keys |
+| Passes prompts, receives responses | Handle OAuth flows |
+| Respects each CLI's auth state | Piggyback on private OAuth clients |
+
+<Tip>Log in once per CLI (e.g., `claude login`), and PuzldAI just orchestrates.</Tip>
+
+## Model Selection
+
+Pick specific models for each agent. Aliases like `sonnet`, `opus`, `haiku` point to the latest version.
+
+### TUI
+
+```bash
+/model                            # Open model selection panel
+/model claude opus                # Set Claude to use Opus
+/model gemini gemini-2.0-flash    # Set specific Gemini model
+```
+
+### CLI
+
+```bash
+puzldai model show                # Show current models
+puzldai model list                # List all available models
+puzldai model list claude         # List models for specific agent
+puzldai model set claude opus     # Set model for an agent
+puzldai model clear claude        # Reset to CLI default
+```
+
+### Per-Task Override
+
+```bash
+puzldai run "task" -m opus        # Override model for this run
+puzldai agent -a claude -m haiku  # Interactive mode with specific model
+```
+
+## Router Configuration
+
+The router decides which agent handles each task.
+
+```bash
+/router claude            # Use Claude for routing decisions
+/router ollama            # Use Ollama (local, fast)
+```
+
+## Settings Toggles
+
+| Command | Description |
+|---------|-------------|
+| `/sequential` | Toggle: compare runs one-at-a-time vs parallel |
+| `/pick` | Toggle: auto-select best response from compare |
+| `/execute` | Toggle: auto-run autopilot plans |
+| `/interactive` | Toggle: pause between pipeline steps |
+
+## Configuration File
+
+Settings are stored in `~/.puzldai/config.json`:
+
+```json
+{
+  "defaultAgent": "auto",
+  "fallbackAgent": "claude",
+  "routerModel": "llama3.2",
+  "adapters": {
+    "claude": { "enabled": true, "path": "claude", "model": "sonnet" },
+    "gemini": { "enabled": true, "path": "gemini", "model": "gemini-2.5-pro" },
+    "codex": { "enabled": false, "path": "codex", "model": "gpt-5.1-codex" },
+    "ollama": { "enabled": true, "model": "llama3.2" },
+    "mistral": { "enabled": true, "path": "vibe" }
+  }
+}
+```
+
+## Data Storage
+
+PuzldAI stores data in `~/.puzldai/`:
+
+```
+~/.puzldai/
+├── config.json      # User preferences
+├── memory.db        # SQLite memory database
+├── sessions.db      # Chat session history
+└── observations.db  # Training data observations
+```
+
+## Project Instructions
+
+PuzldAI auto-injects project instructions into prompts:
+
+| File | Purpose |
+|------|---------|
+| `AGENTS.md` | Project-wide instructions |
+| `CLAUDE.md`, `CODEX.md` | Agent-specific instructions |
+| `.cursorrules` | IDE rules (also supported) |
+| `.puzldai/agents/*.md` | Per-agent custom instructions |

@@ -1,0 +1,73 @@
+---
+title: "Multi-Agent Modes"
+description: "Overview of PuzldAI's collaborative AI workflows"
+---
+
+PuzldAI supports multiple modes for orchestrating AI models to work together on tasks.
+
+## Available Modes
+
+<CardGroup cols={2}>
+  <Card title="Compare" icon="code-compare" href="/modes/compare">
+    Run the same prompt on multiple models and compare responses side-by-side.
+  </Card>
+  <Card title="Consensus" icon="users" href="/modes/consensus">
+    Models propose solutions, vote on the best approach, and synthesize a final answer.
+  </Card>
+  <Card title="Debate" icon="comments" href="/modes/debate">
+    Multi-round discussion where models argue and refine their positions.
+  </Card>
+  <Card title="Pipeline" icon="diagram-project" href="/modes/pipeline">
+    Chain models together where each step builds on the previous.
+  </Card>
+  <Card title="Correction" icon="check-double" href="/modes/correction">
+    One model produces, another reviews and optionally fixes.
+  </Card>
+</CardGroup>
+
+## When to Use Each Mode
+
+| Mode | Best For |
+|------|----------|
+| **Compare** | Getting diverse perspectives, choosing between approaches |
+| **Consensus** | Complex decisions requiring agreement, architectural choices |
+| **Debate** | Exploring trade-offs, uncovering edge cases |
+| **Pipeline** | Multi-step workflows (analyze → code → review) |
+| **Correction** | Quality assurance, code review, fact-checking |
+
+## Quick Examples
+
+### Compare Mode
+```bash
+/compare claude,gemini "Write a function to parse JSON safely"
+```
+
+### Consensus Mode
+```bash
+/consensus claude,gemini,codex "Design the database schema for a todo app"
+```
+
+### Debate Mode
+```bash
+/debate claude,gemini --rounds 2 "Should we use GraphQL or REST for this API?"
+```
+
+### Pipeline Mode
+```bash
+/pipeline gemini:analyze,claude:code,codex:review "Build a rate limiter"
+```
+
+### Correction Mode
+```bash
+/correct --producer claude --reviewer gemini "Implement binary search"
+```
+
+## Background Execution
+
+All multi-agent modes support background execution:
+
+- Press **Escape** to hide the view and return to chat (execution continues)
+- Press **Ctrl+E** to return and check progress
+- Press **Ctrl+C** to cancel the operation
+
+A status indicator shows progress when running in the background.

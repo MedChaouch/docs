@@ -1,0 +1,99 @@
+---
+title: "Consensus Mode"
+description: "Collaborative decision-making with proposal and voting"
+---
+
+Consensus mode enables multiple AI models to collaborate on a task through a structured process of proposing solutions, voting, and synthesizing the best approach.
+
+## Usage
+
+```bash
+/consensus <agents> "<prompt>"
+```
+
+### Examples
+
+```bash
+# Three-model consensus
+/consensus claude,gemini,codex "Design the authentication system"
+
+# Two-model consensus
+/consensus claude,gemini "Choose the best database for our use case"
+```
+
+## How It Works
+
+<Steps>
+  <Step title="Proposal Phase">
+    Each agent independently proposes a solution to the task. They receive project structure context but don't see other agents' proposals to avoid bias.
+  </Step>
+  <Step title="Voting Rounds">
+    Agents review all proposals and vote for the best one, providing reasoning. Multiple voting rounds allow positions to evolve.
+  </Step>
+  <Step title="Synthesis">
+    A synthesizer agent analyzes the votes, identifies the winning proposal, and creates a unified final solution incorporating the best ideas.
+  </Step>
+</Steps>
+
+## Configuration
+
+### Voting Rounds
+
+By default, consensus runs 2 voting rounds. The number of rounds affects how much deliberation occurs before synthesis.
+
+### Synthesizer
+
+By default, the first agent in the list synthesizes the final result. You can specify a different synthesizer if needed.
+
+## Actions After Consensus
+
+After consensus completes, you can:
+
+| Action | Description |
+|--------|-------------|
+| **Accept** | Use the synthesized solution |
+| **Build** | Enter Build mode to implement the solution |
+| **Retry** | Run consensus again with the same task |
+| **Edit** | Modify the task and run again |
+
+## Project Context
+
+Consensus mode automatically provides project structure to all agents, enabling them to make informed proposals that reference actual files and directories in your codebase.
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `Escape` | Hide view (keeps running in background) |
+| `Ctrl+E` | Return to consensus view |
+| `Ctrl+C` | Cancel operation |
+| `↑/↓` | Navigate action options |
+| `Enter` | Select action |
+
+## Best Practices
+
+<Tip>
+**Use consensus for architectural decisions** - When there are multiple valid approaches, consensus helps explore options and reach agreement.
+</Tip>
+
+<Warning>
+**Requires 2+ agents** - Consensus needs at least two models to vote and reach agreement.
+</Warning>
+
+## Example Output
+
+```
+─── Consensus ───
+
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│ claude          │  │ gemini          │  │ codex           │
+│ [proposal]      │  │ [proposal]      │  │ [proposal]      │
+│ Use JWT with... │  │ Session-based...│  │ OAuth 2.0...    │
+└─────────────────┘  └─────────────────┘  └─────────────────┘
+
+Voting Round 1...
+Winner: claude's proposal (2 votes)
+
+Synthesis:
+Based on the consensus, JWT authentication is recommended...
+```

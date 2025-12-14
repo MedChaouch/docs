@@ -1,0 +1,67 @@
+---
+title: "Intelligent Routing"
+description: "Auto-route tasks to the best agent"
+---
+
+PuzldAI's router automatically selects the best agent for each task based on the prompt content and task type.
+
+## How It Works
+
+When you send a message without specifying an agent, the router:
+
+1. Analyzes your prompt
+2. Determines task type (code, research, general, etc.)
+3. Selects the most suitable agent
+4. Routes the request
+
+## Router Agent
+
+The router uses a fast local model by default (Ollama). You can change it:
+
+```bash
+/router ollama            # Use Ollama (fast, local)
+/router claude            # Use Claude (more accurate)
+/router gemini            # Use Gemini
+```
+
+## Agent Selection
+
+| Task Type | Typical Agent |
+|-----------|---------------|
+| Code generation | Claude |
+| Research, analysis | Gemini |
+| Quick questions | Ollama |
+| Complex reasoning | Claude |
+
+## Bypassing the Router
+
+Force a specific agent:
+
+```bash
+# TUI
+/agent claude
+/agent gemini
+
+# CLI
+puzldai run "task" -a claude
+```
+
+## Auto Mode
+
+The default `auto` mode lets the router decide:
+
+```bash
+puzldai run "explain async/await"  # Router picks
+```
+
+## Fallback
+
+If the selected agent fails, PuzldAI falls back to the configured fallback agent (default: Claude).
+
+Configure in `~/.puzldai/config.json`:
+
+```json
+{
+  "fallbackAgent": "claude"
+}
+```

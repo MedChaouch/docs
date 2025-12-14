@@ -1,0 +1,111 @@
+---
+title: "Agentic Mode"
+description: "LLMs explore your codebase and propose edits"
+---
+
+Agentic mode gives LLMs tools to explore your codebase, then propose file edits with permission prompts — like Claude Code, but for any LLM.
+
+## Usage
+
+Use the `@agent` syntax to trigger agentic mode:
+
+```bash
+@claude fix the bug in src/utils.ts
+@gemini add error handling to api/routes.ts
+@ollama create a hello world script
+```
+
+Or use commands:
+
+```bash
+/plan @claude refactor the auth system      # Plan only (no execution)
+/build @claude implement the login form     # Full implementation with tools
+```
+
+## Available Tools
+
+| Tool | Description |
+|------|-------------|
+| `view` | Read file contents with line numbers |
+| `glob` | Find files by pattern (e.g., `**/*.ts`) |
+| `grep` | Search file contents with regex |
+| `bash` | Execute shell commands |
+| `write` | Create or overwrite files |
+| `edit` | Search and replace in files |
+
+## Permission Prompts
+
+Every tool call shows a permission prompt:
+
+- **Allow** — Execute this tool call
+- **Allow from directory** — Auto-approve reads from this directory
+- **Allow all reads** — Auto-approve all file reads
+- **Deny** — Skip this tool call
+- **Esc** — Cancel entire operation
+
+<Note>Claude and Ollama fully respect permission prompts. Gemini and Codex have built-in file reading that may bypass prompts.</Note>
+
+## Plan vs Build Mode
+
+| Mode | Description |
+|------|-------------|
+| **Plan** | LLM analyzes and describes approach, no file changes |
+| **Build** | LLM explores and edits with full tool access |
+
+Toggle with `Tab` in the TUI.
+
+## Live Tool Activity
+
+When the LLM uses tools, you see:
+
+- **●** Green = completed
+- **●** Yellow = running
+- **●** Red = error
+- **●** Gray = pending
+
+Press `Ctrl+S` to expand/collapse full output.
+
+## How It Works
+
+<Steps>
+  <Step title="Describe the task">
+    Use `@agent` syntax: `@claude fix the login bug`
+  </Step>
+  <Step title="LLM explores">
+    The LLM uses view, glob, grep to understand your codebase
+  </Step>
+  <Step title="Permission prompts">
+    Each tool call shows a prompt — you approve or deny
+  </Step>
+  <Step title="LLM proposes edits">
+    The LLM uses write/edit to propose changes
+  </Step>
+  <Step title="Review diff">
+    You see a diff preview and approve or reject each change
+  </Step>
+  <Step title="Apply changes">
+    Approved changes are written to disk
+  </Step>
+</Steps>
+
+## Consensus → Agentic Workflow
+
+Run consensus first, then continue with an agent:
+
+```bash
+/consensus claude,gemini "best approach for auth"
+# Choose "Continue"
+@claude implement this    # Has consensus context
+```
+
+The consensus result is automatically injected as context.
+
+## Agent Support
+
+| Agent | Agentic Support |
+|-------|-----------------|
+| Claude | ✅ Full support |
+| Ollama | ✅ Full support |
+| Gemini | ⚠️ Auto-reads files (bypasses prompts) |
+| Codex | ⚠️ Auto-reads files (bypasses prompts) |
+| Mistral | ⚠️ Inconsistent |

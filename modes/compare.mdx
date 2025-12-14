@@ -1,0 +1,78 @@
+---
+title: "Compare Mode"
+description: "Run prompts on multiple models and compare responses"
+---
+
+Compare mode sends the same prompt to multiple AI models simultaneously and displays their responses side-by-side for easy comparison.
+
+## Usage
+
+```bash
+/compare <agents> "<prompt>"
+```
+
+### Examples
+
+```bash
+# Compare Claude and Gemini
+/compare claude,gemini "Explain microservices architecture"
+
+# Compare three models
+/compare claude,gemini,codex "Write a binary search function"
+
+# Compare with Ollama
+/compare claude,ollama "What is dependency injection?"
+```
+
+## Features
+
+### Side-by-Side View
+
+Responses are displayed in columns, allowing you to easily compare:
+- Response quality and completeness
+- Different approaches to the same problem
+- Response time for each model
+
+### Sequential Mode
+
+By default, all models run in parallel. Enable sequential mode to run one at a time:
+
+```bash
+/sequential    # Toggle sequential mode
+```
+
+This is useful when you want to see responses as they complete.
+
+### Pick Mode
+
+Enable pick mode to have an AI select the best response:
+
+```bash
+/pick          # Toggle pick mode
+```
+
+When enabled, after all responses are collected, an AI evaluates them and selects the best one with an explanation.
+
+## Project Context
+
+Compare mode automatically injects project structure context, so models understand your codebase without needing file access.
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `Escape` | Hide view (keeps running in background) |
+| `Ctrl+E` | Return to compare view |
+| `Ctrl+C` | Cancel all requests |
+| `←/→` | Navigate between responses |
+
+## History
+
+After exiting compare mode, results are saved as a compact view in chat history. Press **Ctrl+E** to expand and view again.
+
+## Options
+
+| Option | Command | Description |
+|--------|---------|-------------|
+| Sequential | `/sequential` | Run models one at a time |
+| Pick | `/pick` | Auto-select best response |

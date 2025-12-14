@@ -3,92 +3,80 @@ title: "Quickstart"
 description: "Get up and running with PuzldAI in minutes"
 ---
 
-## Installation
-
-<Steps>
-  <Step title="Clone the repository">
-    ```bash
-    git clone https://github.com/MedChaouch/Puzld.ai.git
-    cd Puzld.ai
-    ```
-  </Step>
-  <Step title="Install dependencies">
-    ```bash
-    npm install
-    ```
-  </Step>
-  <Step title="Build the project">
-    ```bash
-    npm run build
-    ```
-  </Step>
-  <Step title="Link globally (optional)">
-    ```bash
-    npm link
-    ```
-    Now you can run `puzld` from anywhere.
-  </Step>
-</Steps>
-
-## Configuration
-
-### API Keys
-
-Set up your API keys for the models you want to use:
+## Install
 
 ```bash
-# Claude (Anthropic)
-export ANTHROPIC_API_KEY="your-key"
-
-# Gemini (Google)
-export GEMINI_API_KEY="your-key"
-
-# OpenAI Codex
-export OPENAI_API_KEY="your-key"
-
-# Ollama (local, no key needed)
-# Just have Ollama running locally
+npm install -g puzldai
 ```
 
-<Tip>Add these to your `.bashrc` or `.zshrc` for persistence.</Tip>
+Or try without installing:
+
+```bash
+npx puzldai
+```
+
+## Prerequisites
+
+PuzldAI orchestrates existing CLI tools. Install the ones you want to use:
+
+| Agent | CLI | Install |
+|-------|-----|---------|
+| Claude | [Claude CLI](https://docs.anthropic.com) | Follow Anthropic docs |
+| Gemini | [Gemini CLI](https://ai.google.dev) | Follow Google docs |
+| Codex | [Codex CLI](https://openai.com) | Follow OpenAI docs |
+| Ollama | [Ollama](https://ollama.ai) | `curl -fsSL https://ollama.ai/install.sh \| sh` |
+| Mistral | [Vibe CLI](https://github.com/mistralai/vibe) | Follow Mistral docs |
+
+<Tip>You only need ONE CLI installed to start. Claude and Ollama have the best agentic mode support.</Tip>
+
+## Check Available Agents
+
+```bash
+puzldai check
+```
+
+This shows which CLIs are installed and ready.
 
 ## First Run
 
-Start the TUI (Terminal User Interface):
+### Interactive TUI
 
 ```bash
-puzld
+puzldai
 ```
 
-Or run a quick prompt:
+### Single Task
 
 ```bash
-puzld run "explain what a REST API is"
+puzldai run "explain recursion"
+```
+
+### Compare Agents
+
+```bash
+puzldai compare claude,gemini "best error handling practices"
 ```
 
 ## Basic Commands
 
 <CardGroup cols={2}>
   <Card title="Chat" icon="message">
-    Just type your message and press Enter. The AI will respond using intelligent routing.
+    Just type your message in the TUI. Auto-routing picks the best agent.
   </Card>
   <Card title="Compare" icon="code-compare">
     ```
     /compare claude,gemini "your task"
     ```
-    Compare responses from multiple models side-by-side.
   </Card>
-  <Card title="Consensus" icon="users">
+  <Card title="Agentic Mode" icon="robot">
     ```
-    /consensus claude,gemini,codex "your task"
+    @claude fix the bug in utils.ts
     ```
-    Models propose, vote, and synthesize a final answer.
   </Card>
   <Card title="Help" icon="circle-question">
     ```
     /help
     ```
-    See all available commands.
   </Card>
 </CardGroup>
 
@@ -106,16 +94,16 @@ puzld run "explain what a REST API is"
 ## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Multi-Agent Modes" icon="users" href="/modes/compare">
-    Learn about Compare, Consensus, Debate, and Pipeline modes.
+  <Card title="Multi-Agent Modes" icon="users" href="/modes/overview">
+    Compare, Consensus, Debate, Pipeline, Correction
   </Card>
-  <Card title="Agentic Execution" icon="robot" href="/features/agentic">
-    Plan and Build modes for code generation and file editing.
-  </Card>
-  <Card title="Memory & RAG" icon="brain" href="/features/memory">
-    Persistent memory with vector search.
+  <Card title="Agentic Mode" icon="robot" href="/features/agentic">
+    LLMs explore your codebase and propose edits
   </Card>
   <Card title="All Commands" icon="terminal" href="/commands/chat">
-    Full reference of all available commands.
+    Full reference of TUI and CLI commands
+  </Card>
+  <Card title="Configuration" icon="gear" href="/configuration">
+    Models, routing, and settings
   </Card>
 </CardGroup>

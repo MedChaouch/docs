@@ -1,0 +1,109 @@
+---
+title: "Settings & CLI"
+description: "CLI commands and configuration"
+---
+
+## CLI Commands
+
+### Basic Usage
+
+```bash
+puzldai                           # Launch TUI
+puzldai run "task"                # Single task
+puzldai run "task" -a claude      # Force agent
+puzldai run "task" -m opus        # Override model
+```
+
+### Compare
+
+```bash
+puzldai compare "task"            # Default: claude,gemini
+puzldai compare "task" -a a,b,c   # Specify agents
+puzldai compare "task" -s         # Sequential mode
+puzldai compare "task" -p         # Pick best response
+```
+
+### Collaboration
+
+```bash
+puzldai correct "task" --producer claude --reviewer gemini
+puzldai correct "task" --producer claude --reviewer gemini --fix
+puzldai debate "topic" -a claude,gemini -r 3 -m ollama
+puzldai consensus "task" -a claude,gemini -r 3 -s claude
+```
+
+### Pipelines & Workflows
+
+```bash
+puzldai run "task" -P "gemini:analyze,claude:code"
+puzldai run "task" -T template-name
+puzldai run "task" -i             # Interactive mode
+```
+
+### Autopilot
+
+```bash
+puzldai autopilot "task"          # Generate plan
+puzldai autopilot "task" -x       # Plan + execute
+puzldai autopilot "task" -p claude
+```
+
+### Model Management
+
+```bash
+puzldai model show                # Show current models
+puzldai model list                # List available models
+puzldai model set claude opus     # Set model
+puzldai model clear claude        # Reset to default
+```
+
+### Sessions
+
+```bash
+puzldai session list              # List sessions
+puzldai session new               # Create new session
+```
+
+### Templates
+
+```bash
+puzldai template list
+puzldai template show <name>
+puzldai template create <name> -P "..." -d "desc"
+puzldai template edit <name>
+puzldai template delete <name>
+```
+
+### Indexing
+
+```bash
+puzldai index                     # Index codebase
+puzldai index --quick             # Skip embeddings
+puzldai index --search "query"    # Search indexed code
+puzldai index --context "task"    # Get relevant context
+puzldai index --config            # Show project config
+puzldai index --graph             # Show dependency graph
+```
+
+### Other
+
+```bash
+puzldai check                     # Agent status
+puzldai agent                     # Interactive agent mode
+puzldai serve                     # API server
+puzldai serve -p 8080             # Custom port
+puzldai serve -w                  # With web terminal
+```
+
+## Keyboard Shortcuts (TUI)
+
+| Shortcut | Action |
+|----------|--------|
+| `Enter` | Send message |
+| `Escape` | Go back / Hide view |
+| `Ctrl+E` | Expand last result |
+| `Ctrl+C` | Cancel / Exit |
+| `Ctrl+S` | Expand tool output |
+| `Tab` | Toggle Plan/Build mode |
+| `↑/↓` | Navigate history / options |
+| `←/→` | Navigate views |

@@ -1,0 +1,74 @@
+---
+title: "Observation Layer"
+description: "Log interactions for training data generation"
+---
+
+All agentic interactions are logged for training data generation and fine-tuning.
+
+## What Gets Logged
+
+| Data | Description |
+|------|-------------|
+| **Inputs** | Prompts, injected context, agent/model used |
+| **Outputs** | LLM responses, proposed files, explanations |
+| **Decisions** | Which files were accepted/rejected |
+| **Edits** | User modifications to proposed content |
+
+## DPO Pair Types
+
+| Type | Description |
+|------|-------------|
+| `accept_reject` | User accepted some files, rejected others |
+| `user_edit` | User modified the LLM's proposed content |
+| `full_reject` | User rejected all proposed files |
+
+## CLI Commands
+
+```bash
+# TUI
+/observe                    # Open observation panel
+/observe summary            # Show statistics
+/observe list 10            # List recent observations
+/observe export data.jsonl  # Export to file
+/observe preferences        # Export DPO pairs
+
+# CLI
+puzldai observe summary
+puzldai observe list
+puzldai observe export observations.jsonl
+puzldai observe preferences preferences.jsonl
+```
+
+## Export Formats
+
+| Format | Extension | Use Case |
+|--------|-----------|----------|
+| JSONL | `.jsonl` | Training pipelines |
+| JSON | `.json` | Analysis |
+| CSV | `.csv` | Spreadsheets |
+
+## Programmatic Export
+
+```typescript
+import { exportObservations, exportPreferencePairs } from 'puzldai/observation';
+
+// Export all observations
+exportObservations({
+  outputPath: 'observations.jsonl',
+  format: 'jsonl'
+});
+
+// Export DPO training pairs
+exportPreferencePairs({
+  outputPath: 'preferences.jsonl',
+  format: 'jsonl'
+});
+```
+
+## Storage
+
+Observations are stored in:
+
+```
+~/.puzldai/observations.db
+```

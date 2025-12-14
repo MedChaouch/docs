@@ -1,0 +1,108 @@
+---
+title: "Debate Mode"
+description: "Multi-round discussions to explore ideas and trade-offs"
+---
+
+Debate mode facilitates structured discussions between AI models, allowing them to present arguments, respond to each other, and refine their positions over multiple rounds.
+
+## Usage
+
+```bash
+/debate <agents> --rounds <n> "<topic>"
+```
+
+### Examples
+
+```bash
+# Two-round debate between Claude and Gemini
+/debate claude,gemini --rounds 2 "GraphQL vs REST for our API"
+
+# Three-model debate
+/debate claude,gemini,codex --rounds 2 "Monolith vs microservices"
+```
+
+## How It Works
+
+<Steps>
+  <Step title="Initial Positions">
+    Each agent presents their initial position on the topic. All agents respond in parallel.
+  </Step>
+  <Step title="Response Rounds">
+    In each subsequent round, agents read all previous responses and can:
+    - Defend their position with new arguments
+    - Address counterpoints from other agents
+    - Update their view if convinced
+  </Step>
+  <Step title="Conclusion (Optional)">
+    A moderator agent can synthesize the debate into a balanced conclusion, summarizing agreements and disagreements.
+  </Step>
+</Steps>
+
+## Configuration
+
+### Rounds
+
+The `--rounds` parameter controls how many rounds of debate occur:
+
+```bash
+/debate claude,gemini --rounds 3 "topic"
+```
+
+More rounds allow deeper exploration but take longer.
+
+### Moderator
+
+Add a moderator to synthesize the final conclusion:
+
+```bash
+/debate claude,gemini --rounds 2 --moderator codex "topic"
+```
+
+## When to Use Debate
+
+Debate mode excels at:
+
+- **Exploring trade-offs** - Different perspectives highlight pros and cons
+- **Technical decisions** - Architecture, technology choices, design patterns
+- **Edge case discovery** - Adversarial discussion uncovers potential issues
+- **Learning** - See how different models reason about problems
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `Escape` | Hide view (keeps running) |
+| `Ctrl+E` | Return to debate view |
+| `Ctrl+C` | Cancel debate |
+| `Enter` | Select winner (after completion) |
+
+## Example Output
+
+```
+─── Debate: GraphQL vs REST ───
+
+Round 0 - Initial Positions:
+
+claude: "GraphQL offers significant advantages for our use case..."
+
+gemini: "REST remains the better choice because..."
+
+Round 1 - Responses:
+
+claude: "Addressing Gemini's point about caching..."
+
+gemini: "While Claude makes valid points about flexibility..."
+
+─── Moderator Conclusion ───
+Both approaches have merit. For this specific project...
+```
+
+## Tips
+
+<Tip>
+**Choose complementary models** - Different models often have different strengths and perspectives.
+</Tip>
+
+<Tip>
+**2-3 rounds is usually enough** - More rounds can lead to repetition without new insights.
+</Tip>

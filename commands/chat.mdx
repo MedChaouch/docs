@@ -1,0 +1,69 @@
+---
+title: "Chat Commands"
+description: "TUI commands reference"
+---
+
+## Multi-Agent Modes
+
+| Command | Description |
+|---------|-------------|
+| `/compare claude,gemini "task"` | Compare agents side-by-side |
+| `/consensus claude,gemini "task"` | Build consensus across agents |
+| `/debate claude,gemini "topic"` | Multi-agent debate |
+| `/correct claude gemini "task"` | Cross-agent correction |
+| `/autopilot "task"` | AI-planned workflow |
+| `/workflow name "task"` | Run saved workflow |
+| `/workflows` | Manage workflow templates |
+
+## Agentic Mode
+
+| Command | Description |
+|---------|-------------|
+| `@claude "task"` | Agentic mode with Claude |
+| `@gemini "task"` | Agentic mode with Gemini |
+| `@ollama "task"` | Agentic mode with Ollama |
+| `/plan @claude "task"` | Plan mode (analyze, no execution) |
+| `/build @claude "task"` | Build mode (full tool access) |
+
+## Agent & Model
+
+| Command | Description |
+|---------|-------------|
+| `/agent claude` | Switch to specific agent |
+| `/model` | Open model selection panel |
+| `/model claude opus` | Set model for agent |
+| `/router ollama` | Set routing agent |
+| `/planner claude` | Set autopilot planner |
+
+## Toggles
+
+| Command | Description |
+|---------|-------------|
+| `/sequential` | Toggle: compare one-at-a-time |
+| `/pick` | Toggle: select best from compare |
+| `/execute` | Toggle: auto-run autopilot plans |
+| `/interactive` | Toggle: pause between steps |
+
+## Sessions
+
+| Command | Description |
+|---------|-------------|
+| `/session` | Start new session |
+| `/resume` | Resume previous session |
+
+## Indexing
+
+| Command | Description |
+|---------|-------------|
+| `/index` | Open indexing panel |
+| `/index search "query"` | Search indexed code |
+
+## Other
+
+| Command | Description |
+|---------|-------------|
+| `/settings` | Open settings panel |
+| `/observe` | Open observations panel |
+| `/changelog` | Show version history |
+| `/help` | Show all commands |
+| `/clear` | Clear chat history |

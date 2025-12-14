@@ -1,0 +1,145 @@
+---
+title: "Correction Mode"
+description: "Producer-reviewer workflow for quality assurance"
+---
+
+Correction mode implements a producer-reviewer pattern where one model generates output and another reviews it, optionally followed by fixes based on feedback.
+
+## Usage
+
+```bash
+/correct --producer <agent> --reviewer <agent> "<prompt>"
+```
+
+### Examples
+
+```bash
+# Claude produces, Gemini reviews
+/correct --producer claude --reviewer gemini "Write a REST API endpoint"
+
+# With automatic fix
+/correct --producer claude --reviewer gemini --fix "Implement binary search"
+```
+
+## How It Works
+
+<Steps>
+  <Step title="Production">
+    The producer agent generates the initial output for the task.
+  </Step>
+  <Step title="Review">
+    The reviewer agent critiques the output, identifying issues, suggesting improvements, and rating quality (1-10).
+  </Step>
+  <Step title="Fix (Optional)">
+    If `--fix` is enabled, the producer receives the review feedback and creates an improved version.
+  </Step>
+</Steps>
+
+## Options
+
+| Option | Description |
+|--------|-------------|
+| `--producer` | Agent that generates the initial output |
+| `--reviewer` | Agent that reviews and critiques |
+| `--fix` | Enable automatic fix based on review |
+
+## Use Cases
+
+### Code Review
+
+```bash
+/correct --producer claude --reviewer codex "Implement a cache class"
+```
+
+The reviewer checks for:
+- Correctness and edge cases
+- Performance issues
+- Code style and best practices
+- Security concerns
+
+### Writing Review
+
+```bash
+/correct --producer gemini --reviewer claude "Write documentation for the API"
+```
+
+The reviewer evaluates:
+- Clarity and completeness
+- Technical accuracy
+- Structure and organization
+
+### Fact Checking
+
+```bash
+/correct --producer ollama --reviewer claude "Explain how SSL/TLS works"
+```
+
+The reviewer verifies:
+- Technical accuracy
+- Completeness of explanation
+- Common misconceptions
+
+## Example Output
+
+```
+─── Correction ───
+
+Producer: claude
+━━━━━━━━━━━━━━━━
+```python
+def binary_search(arr, target):
+    left, right = 0, len(arr)
+    while left < right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid
+    return -1
+```
+
+Reviewer: gemini
+━━━━━━━━━━━━━━━━
+**Rating: 7/10**
+
+Issues:
+1. Integer overflow possible with `(left + right) // 2` for large arrays
+2. Missing input validation
+3. No docstring
+
+Suggestions:
+- Use `left + (right - left) // 2` to prevent overflow
+- Add type hints and docstring
+
+Fixed Output (claude):
+━━━━━━━━━━━━━━━━━━━━━━
+```python
+def binary_search(arr: list, target: int) -> int:
+    """Binary search for target in sorted array."""
+    if not arr:
+        return -1
+    left, right = 0, len(arr)
+    while left < right:
+        mid = left + (right - left) // 2
+        ...
+```
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `Escape` | Hide view |
+| `Ctrl+E` | Return to view |
+| `Ctrl+C` | Cancel |
+
+## Tips
+
+<Tip>
+**Use different model families** - Cross-model review catches more issues than same-model review.
+</Tip>
+
+<Tip>
+**Enable --fix for iterative improvement** - The producer learns from feedback and creates better output.
+</Tip>
