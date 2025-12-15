@@ -54,10 +54,24 @@ In Default and Plan modes, every tool call shows a permission prompt:
 - **Allow** — Execute this tool call
 - **Allow from directory** — Auto-approve reads from this directory
 - **Allow all reads** — Auto-approve all file reads
+- **Allow all edits** — Auto-approve all file writes for this session
 - **Deny** — Skip this tool call
 - **Esc** — Cancel entire operation
 
-<Note>Claude and Ollama fully respect permission prompts. Gemini and Codex have built-in file reading that may bypass prompts.</Note>
+<Tip>"Allow all edits" persists across messages in the same session — useful when you trust the agent to make multiple changes.</Tip>
+
+## Trust Management
+
+Pre-approve directories so the agent can read files without prompts:
+
+```bash
+/trusted                  # List trusted directories
+/trusted add ./src        # Trust the src folder
+/trusted add .            # Trust current directory
+/trusted remove ./src     # Remove trust
+```
+
+Files in trusted directories are auto-approved for read operations.
 
 ## Live Tool Activity
 
@@ -109,8 +123,22 @@ The consensus result is automatically injected as context.
 
 | Agent | Agentic Support |
 |-------|-----------------|
-| Claude | Full support |
-| Ollama | Full support |
-| Gemini | Auto-reads files (bypasses prompts) |
-| Codex | Auto-reads files (bypasses prompts) |
-| Mistral | Inconsistent |
+| Claude | Full support — uses our tool system |
+| Ollama | Full support — uses our tool system |
+| Gemini | Partial — auto-reads files (bypasses read prompts) |
+| Codex | Safe mode — backup/rollback for file changes |
+| Mistral | Experimental — inconsistent tool support |
+
+### Codex Safe Mode
+
+Codex runs in "safe mode" by default. Since Codex's exec mode writes files directly (bypassing our tool system), PuzldAI:
+
+1. **Backs up** source files before Codex runs
+2. **Runs Codex** with `workspace-write` sandbox
+3. **Detects changes** by comparing files after execution
+4. **Applies approval mode**:
+   - Plan mode → rolls back all changes
+   - Accept/YOLO → keeps changes
+   - Default → shows notification, keeps changes
+
+<Warning>Codex changes are applied immediately, then rolled back if rejected. This differs from Claude/Ollama where you approve *before* changes are written.</Warning>

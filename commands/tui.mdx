@@ -30,10 +30,23 @@ description: "Interactive terminal UI commands"
 
 | Mode | Permissions | File Edits |
 |------|-------------|------------|
-| **Default** | Ask for each | Diff review |
-| **Plan** | Ask for each | Show plan only (no apply) |
-| **Accept** | Ask for each | Auto-apply |
-| **YOLO** | Auto-approve | Auto-apply |
+| **Default** | Ask for each | Diff review before apply |
+| **Plan** | Ask for each | Show plan only, no apply |
+| **Accept** | Ask for each | Auto-apply edits |
+| **YOLO** | Auto-approve all | Auto-apply all |
+
+### Permission Options
+
+When prompted for permission:
+
+| Option | Effect |
+|--------|--------|
+| Allow | Execute this tool call |
+| Allow from directory | Auto-approve reads from this directory |
+| Allow all reads | Auto-approve all file reads |
+| Allow all edits | Auto-approve all writes this session |
+| Deny | Skip this tool call |
+| Esc | Cancel entire operation |
 
 ## Trust Management
 
