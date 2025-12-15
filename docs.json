@@ -38,6 +38,7 @@
               "features/routing",
               "features/models",
               "features/agentic",
+              "features/indexing",
               "features/memory",
               "features/observations"
             ]

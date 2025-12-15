@@ -36,9 +36,20 @@ Set the agent for your tasks:
 | `write` | Create or overwrite files |
 | `edit` | Search and replace in files |
 
+## Approval Modes
+
+Control how permissions and file edits are handled with `/approval-mode`:
+
+| Mode | Permissions | File Edits | Use Case |
+|------|-------------|------------|----------|
+| **Default** | Ask for each | Diff review | Normal development |
+| **Plan** | Ask for each | Show plan only | Planning/reviewing |
+| **Accept** | Ask for each | Auto-apply | Faster iteration |
+| **YOLO** | Auto-approve | Auto-apply | Full trust, max speed |
+
 ## Permission Prompts
 
-Every tool call shows a permission prompt:
+In Default and Plan modes, every tool call shows a permission prompt:
 
 - **Allow** — Execute this tool call
 - **Allow from directory** — Auto-approve reads from this directory

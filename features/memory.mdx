@@ -5,6 +5,8 @@ description: "Persistent memory with semantic retrieval"
 
 PuzldAI includes a memory system that stores conversations, decisions, and code patterns for future retrieval.
 
+<Tip>For codebase indexing and search, see [Indexing & Search](/features/indexing).</Tip>
+
 ## Memory Types
 
 | Type | Description |
@@ -16,21 +18,21 @@ PuzldAI includes a memory system that stores conversations, decisions, and code 
 
 ## How It Works
 
-1. **Automatic storage** — When you accept file edits in agentic mode, the decision is stored
-2. **Semantic search** — New prompts are matched against stored memories
-3. **Context injection** — Relevant memories are injected into prompts
+1. **Automatic storage** — When you accept file edits, the decision is stored
+2. **Semantic search** — Prompts are matched against stored memories
+3. **Context injection** — Relevant memories are injected into agent prompts
 
 ## Storage
 
-Memory uses SQLite FTS5 (zero dependencies):
-
 ```
-~/.puzldai/memory.db
+~/.puzldai/
+├── memory.db        # SQLite FTS5 for memories
+└── sessions/        # Chat history
 ```
 
 ## Embedding Models
 
-When Ollama is available, PuzldAI uses embeddings for better semantic search:
+When Ollama is available, PuzldAI uses embeddings for semantic search:
 
 | Model | Notes |
 |-------|-------|

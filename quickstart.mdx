@@ -45,6 +45,8 @@ This shows which CLIs are installed and ready.
 puzldai
 ```
 
+On first launch in a new directory, you'll see a trust prompt. This is a security gate (like Claude Code) asking if you trust PuzldAI to read, edit, and execute files in that workspace.
+
 ### Single Task
 
 ```bash
@@ -68,9 +70,9 @@ puzldai compare claude,gemini "best error handling practices"
     /compare claude,gemini "your task"
     ```
   </Card>
-  <Card title="Agentic Mode" icon="robot">
+  <Card title="Switch Agent" icon="robot">
     ```
-    @claude fix the bug in utils.ts
+    /agent claude
     ```
   </Card>
   <Card title="Help" icon="circle-question">
@@ -88,7 +90,7 @@ puzldai compare claude,gemini "best error handling practices"
 | `Escape` | Go back / Hide view |
 | `Ctrl+E` | Expand last result |
 | `Ctrl+C` | Cancel operation |
-| `Tab` | Toggle Plan/Build mode |
+| `Tab` | Autocomplete command |
 | `↑/↓` | Navigate history |
 
 ## Next Steps

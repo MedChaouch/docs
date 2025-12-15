@@ -24,6 +24,25 @@ description: "Interactive terminal UI commands"
 | `/model claude opus` | Set model for agent |
 | `/router ollama` | Set routing agent |
 | `/planner claude` | Set autopilot planner |
+| `/approval-mode` | Open approval mode panel |
+
+## Approval Modes
+
+| Mode | Permissions | File Edits |
+|------|-------------|------------|
+| **Default** | Ask for each | Diff review |
+| **Plan** | Ask for each | Show plan only (no apply) |
+| **Accept** | Ask for each | Auto-apply |
+| **YOLO** | Auto-approve | Auto-apply |
+
+## Trust Management
+
+| Command | Description |
+|---------|-------------|
+| `/trusted` | List trusted directories |
+| `/trusted add [path]` | Trust a directory |
+| `/trusted remove [path]` | Remove trust |
+| `/add-dir [path]` | Alias for trusted add |
 
 ## Toggles
 

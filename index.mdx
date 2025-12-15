@@ -5,7 +5,7 @@ description: "Multi-LLM orchestration framework with agentic execution, memory/R
 
 ## Welcome to PuzldAI
 
-PuzldAI is a powerful CLI tool that orchestrates multiple AI models (Claude, Gemini, Codex, Ollama) with intelligent routing, collaborative workflows, and agentic code execution.
+PuzldAI is a multi-LLM orchestration framework that wraps existing CLI tools (Claude, Gemini, Codex, Ollama, Mistral) — no API keys required. Route tasks to the best agent, compare responses, chain agents in pipelines, or let them collaborate. Agentic mode gives LLMs tools to explore your codebase and propose edits — like Claude Code, but for any LLM.
 
 <Card
   title="Quick Start"
@@ -47,23 +47,37 @@ PuzldAI is a powerful CLI tool that orchestrates multiple AI models (Claude, Gem
   >
     Persistent memory with vector search and automatic context injection.
   </Card>
+  <Card
+    title="Indexing & Search"
+    icon="magnifying-glass-code"
+    href="/features/indexing"
+  >
+    AST indexing, dependency graphs, and semantic code search.
+  </Card>
+  <Card
+    title="Configuration"
+    icon="gear"
+    href="/configuration"
+  >
+    Models, routing, project instructions, and adapter settings.
+  </Card>
 </Columns>
 
 ## Commands
 
 <Columns cols={2}>
   <Card
-    title="Chat Commands"
+    title="TUI Commands"
     icon="terminal"
-    href="/commands/chat"
+    href="/commands/tui"
   >
     `/compare`, `/consensus`, `/debate`, `/pipeline` and more.
   </Card>
   <Card
-    title="Configuration"
-    icon="gear"
-    href="/commands/config"
+    title="CLI Commands"
+    icon="square-terminal"
+    href="/commands/cli"
   >
-    `/model`, `/router`, `/settings` to customize behavior.
+    `puzldai run`, `puzldai compare`, `puzldai agent` and more.
   </Card>
 </Columns>

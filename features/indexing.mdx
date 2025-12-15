@@ -1,0 +1,95 @@
+---
+title: "Indexing & Search"
+description: "Codebase indexing, dependency graphs, and semantic code search"
+---
+
+PuzldAI can index your entire codebase for intelligent context injection and semantic search.
+
+## Quick Start
+
+```bash
+# TUI
+/index              # Open indexing panel
+/index context      # Index current directory
+/index search "auth" # Search indexed code
+```
+
+## Index Panel
+
+Access with `/index` in the TUI:
+
+| Option | Description |
+|--------|-------------|
+| **Context** | Full index with AST parsing and embeddings |
+| **Config** | Detect project configuration files |
+| **Graph** | Build dependency graph |
+| **Search** | Search indexed code semantically |
+
+## What Gets Indexed
+
+| Data | Description |
+|------|-------------|
+| **AST Structure** | Functions, classes, interfaces, exports |
+| **Dependencies** | Import/export relationships between files |
+| **Project Config** | AGENTS.md, package.json, tsconfig.json |
+| **Embeddings** | Semantic vectors for code search |
+
+## Supported Languages
+
+| Language | Extensions |
+|----------|------------|
+| TypeScript | `.ts`, `.tsx` |
+| JavaScript | `.js`, `.jsx` |
+| Python | `.py` |
+| Go | `.go` |
+| Rust | `.rs` |
+| Java | `.java` |
+| C/C++ | `.c`, `.cpp`, `.h` |
+
+## Dependency Graph
+
+The dependency graph tracks import/export relationships:
+
+```
+src/index.ts
+├── imports: ./utils, ./config
+└── exports: main, App
+
+src/utils.ts
+├── imports: lodash
+└── exports: formatDate, parseJSON
+```
+
+Use this to understand how files connect and what might be affected by changes.
+
+## Semantic Search
+
+Search your codebase using natural language:
+
+```bash
+/index search "authentication logic"
+/index search "database connection"
+/index search "error handling"
+```
+
+Results are ranked by semantic similarity, not just keyword matching.
+
+## Context Injection
+
+When you ask questions or request changes, PuzldAI automatically:
+
+1. Searches relevant code from the index
+2. Injects matching files/functions as context
+3. Gives agents better understanding of your codebase
+
+## Storage
+
+Index data is cached locally:
+
+```
+~/.puzldai/
+├── index/           # Cached index data
+└── embeddings/      # Vector embeddings
+```
+
+Re-indexing only processes changed files.
