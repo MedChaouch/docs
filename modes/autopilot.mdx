@@ -1,9 +1,9 @@
 ---
 title: "Autopilot Mode"
-description: "AI-generated execution plans with autonomous operation"
+description: "AI-generated execution plans with multi-agent orchestration"
 ---
 
-Autopilot mode lets an AI agent generate a step-by-step execution plan for complex tasks, then optionally execute it autonomously or with interactive approval at each step.
+Autopilot mode uses an AI planner to analyze complex tasks and generate execution plans that leverage multiple agents' strengths. Each step in the plan is assigned to the most suitable agent (claude, gemini, codex, ollama) based on what it does best.
 
 ## Usage
 
@@ -44,16 +44,34 @@ puzldai autopilot "Add unit tests for utils" -p claude -x -i
 ## How It Works
 
 <Steps>
-  <Step title="Planning">
-    The planner agent analyzes the task and generates a detailed step-by-step execution plan.
+  <Step title="Analyze Task">
+    The planner agent analyzes the task and determines what steps are needed.
   </Step>
-  <Step title="Review">
-    You can review the plan before execution. Modify, approve, or regenerate.
+  <Step title="Assign Agents">
+    For each step, the planner selects the best agent based on their strengths:
+    - **claude**: Code writing, architecture, creative tasks
+    - **gemini**: Analysis, research, planning
+    - **codex**: Debugging, security, code review
+    - **ollama**: Simple queries, fast local responses
   </Step>
-  <Step title="Execution">
-    If `-x` is enabled, each step is executed in sequence. With `-i`, you approve each step.
+  <Step title="Generate Plan">
+    A 1-5 step execution plan is created, with each step showing the assigned agent and action.
+  </Step>
+  <Step title="Execute (optional)">
+    If `/execute` is enabled, steps run in sequence. Each step receives the output from previous steps.
   </Step>
 </Steps>
+
+## Agent Assignment
+
+The planner automatically matches agents to tasks:
+
+| Task Type | Recommended Agent |
+|-----------|-------------------|
+| Write code, generate files | claude |
+| Analyze requirements, plan architecture | gemini |
+| Review code, find bugs, security check | codex |
+| Quick lookups, simple transformations | ollama |
 
 ## Configuration
 
@@ -76,19 +94,14 @@ Control how the plan is executed:
 | Mode | Description |
 |------|-------------|
 | Plan only | Generate plan without executing (default) |
-| Auto-execute (`-x`) | Execute all steps automatically |
-| Interactive (`-x -i`) | Pause and confirm before each step |
+| Auto-execute (`/execute`) | Execute all steps automatically |
+| Interactive (`/interactive`) | Pause and confirm before each step |
 
-## Actions After Planning
-
-After the plan is generated, you can:
-
-| Action | Description |
-|--------|-------------|
-| **Execute** | Run the plan (same as `-x`) |
-| **Edit** | Modify the task and regenerate |
-| **Retry** | Generate a new plan |
-| **Cancel** | Discard the plan |
+To enable execution in TUI:
+```bash
+/execute           # toggle auto-execution on
+/autopilot "task"  # now runs the plan automatically
+```
 
 ## Keyboard Shortcuts
 
@@ -97,39 +110,40 @@ After the plan is generated, you can:
 | `Escape` | Hide view (keeps running) |
 | `Ctrl+E` | Return to autopilot view |
 | `Ctrl+C` | Cancel operation |
-| `Enter` | Approve step (interactive mode) |
-| `Space` | Skip to next step |
 
 ## Example Output
 
 ```
-─── Autopilot ───
-
-Planner: claude
-Task: Build user authentication with JWT
+─── Autopilot [Autopilot Mode] ───
 
 Generated Plan:
 ━━━━━━━━━━━━━━━━
-1. Create auth middleware in src/middleware/auth.ts
-2. Implement JWT token generation in src/utils/jwt.ts
-3. Add login endpoint in src/routes/auth.ts
-4. Add register endpoint in src/routes/auth.ts
-5. Create user model in src/models/user.ts
-6. Add password hashing utility
 
-[Execute] [Edit] [Retry] [Cancel]
+1. [gemini] analyze
+   Break down the authentication requirements and identify components
+
+2. [claude] code
+   Implement JWT token generation and validation utilities
+
+3. [claude] code
+   Create login and register API endpoints
+
+4. [codex] review
+   Review implementation for security vulnerabilities
+
+Use /execute to enable auto-execution
 ```
 
 ## Tips
 
 <Tip>
-**Use Claude for complex planning** - Claude excels at breaking down complex tasks into logical steps.
+**Claude makes a great planner** - For complex tasks, use `/planner claude` to get more detailed, well-structured plans.
 </Tip>
 
 <Tip>
-**Start with interactive mode** - Use `-x -i` to review each step before it runs, especially for unfamiliar tasks.
+**Start with plan-only mode** - Review the generated plan before enabling `/execute` to ensure the agent assignments make sense.
 </Tip>
 
-<Warning>
-**Review generated plans carefully** - Always verify the plan makes sense before enabling auto-execution.
-</Warning>
+<Tip>
+**Use interactive for learning** - Enable `/interactive` to see how each agent handles its assigned step.
+</Tip>

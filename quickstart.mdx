@@ -56,7 +56,7 @@ puzldai run "explain recursion"
 ### Compare Agents
 
 ```bash
-puzldai compare claude,gemini "best error handling practices"
+puzldai compare "best error handling practices" -a claude,gemini
 ```
 
 ## Basic Commands
@@ -96,14 +96,14 @@ puzldai compare claude,gemini "best error handling practices"
 ## Next Steps
 
 <CardGroup cols={2}>
+  <Card title="Workflows & Automation" icon="diagram-project" href="/modes/pipeline">
+    Pipeline & Workflows, Autopilot mode
+  </Card>
   <Card title="Multi-Agent Modes" icon="users" href="/modes/overview">
-    Compare, Consensus, Debate, Pipeline, Correction
+    Compare, Debate, Correction, Consensus
   </Card>
   <Card title="Agentic Mode" icon="robot" href="/features/agentic">
     LLMs explore your codebase and propose edits
-  </Card>
-  <Card title="All Commands" icon="terminal" href="/commands/chat">
-    Full reference of TUI and CLI commands
   </Card>
   <Card title="Configuration" icon="gear" href="/configuration">
     Models, routing, and settings
