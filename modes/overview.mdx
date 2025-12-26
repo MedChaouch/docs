@@ -11,12 +11,6 @@ PuzldAI supports multiple modes for orchestrating AI models to work together on 
   <Card title="Compare" icon="code-compare" href="/modes/compare">
     Run the same prompt on multiple models and compare responses side-by-side.
   </Card>
-  <Card title="Pipeline" icon="diagram-project" href="/modes/pipeline">
-    Chain models together where each step builds on the previous.
-  </Card>
-  <Card title="Autopilot" icon="robot" href="/modes/autopilot">
-    AI generates an execution plan and runs it autonomously or interactively.
-  </Card>
   <Card title="Debate" icon="comments" href="/modes/debate">
     Multi-round discussion where models argue and refine their positions.
   </Card>
@@ -33,8 +27,6 @@ PuzldAI supports multiple modes for orchestrating AI models to work together on 
 | Mode | Best For |
 |------|----------|
 | **Compare** | Getting diverse perspectives, choosing between approaches |
-| **Pipeline** | Multi-step workflows (analyze → code → review) |
-| **Autopilot** | Complex tasks requiring multi-step execution plans |
 | **Debate** | Exploring trade-offs, uncovering edge cases |
 | **Correction** | Quality assurance, code review, fact-checking |
 | **Consensus** | Complex decisions requiring agreement, architectural choices |
@@ -44,16 +36,6 @@ PuzldAI supports multiple modes for orchestrating AI models to work together on 
 ### Compare Mode
 ```bash
 /compare claude,gemini "Write a function to parse JSON safely"
-```
-
-### Pipeline Mode
-```bash
-/workflow code-review "Build a rate limiter"
-```
-
-### Autopilot Mode
-```bash
-/autopilot "Build user authentication with JWT"
 ```
 
 ### Debate Mode

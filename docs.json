@@ -22,12 +22,17 @@
             ]
           },
           {
+            "group": "Workflows & Automation",
+            "pages": [
+              "modes/pipeline",
+              "modes/autopilot"
+            ]
+          },
+          {
             "group": "Multi-Agent Modes",
             "pages": [
               "modes/overview",
               "modes/compare",
-              "modes/pipeline",
-              "modes/autopilot",
               "modes/debate",
               "modes/correction",
               "modes/consensus"
