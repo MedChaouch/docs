@@ -7,18 +7,27 @@ Debate mode facilitates structured discussions between AI models, allowing them 
 
 ## Usage
 
+### TUI (Interactive)
+
 ```bash
-/debate <agents> --rounds <n> "<topic>"
+/debate <agents> "<topic>"
+/settings        # configure rounds & moderator
+```
+
+### CLI
+
+```bash
+puzldai debate "<topic>" -a <agents> [-r rounds] [-m moderator]
 ```
 
 ### Examples
 
 ```bash
-# Two-round debate between Claude and Gemini
-/debate claude,gemini --rounds 2 "GraphQL vs REST for our API"
+# TUI: Debate between Claude and Gemini
+/debate claude,gemini "GraphQL vs REST for our API"
 
-# Three-model debate
-/debate claude,gemini,codex --rounds 2 "Monolith vs microservices"
+# CLI: Three-model debate with 3 rounds and moderator
+puzldai debate "Monolith vs microservices" -a claude,gemini,codex -r 3 -m ollama
 ```
 
 ## How It Works

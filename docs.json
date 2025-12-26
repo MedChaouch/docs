@@ -26,10 +26,11 @@
             "pages": [
               "modes/overview",
               "modes/compare",
-              "modes/consensus",
-              "modes/debate",
               "modes/pipeline",
-              "modes/correction"
+              "modes/autopilot",
+              "modes/debate",
+              "modes/correction",
+              "modes/consensus"
             ]
           },
           {

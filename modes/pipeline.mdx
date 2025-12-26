@@ -7,21 +7,34 @@ Pipeline mode chains multiple AI models together, where each step builds on the 
 
 ## Usage
 
+### TUI (Interactive)
+
 ```bash
-/pipeline "<agent:action,agent:action,...>" "<prompt>"
+/workflow <name> "<prompt>"      # run saved workflow
+/workflows                       # manage saved pipelines
+/interactive                     # toggle pause between steps
 ```
+
+### CLI
+
+```bash
+puzldai run "<prompt>" -P "<agent:action,agent:action,...>" [-i]
+```
+
+| Flag | Description |
+|------|-------------|
+| `-P` | Pipeline steps (e.g., "gemini:analyze,claude:code") |
+| `-T` | Use a saved pipeline template |
+| `-i` | Interactive mode - pause between steps |
 
 ### Examples
 
 ```bash
-# Analyze → Code → Review pipeline
-/pipeline "gemini:analyze,claude:code,codex:review" "Build a rate limiter"
+# TUI: Run saved workflow
+/workflow code-review "Build a rate limiter"
 
-# Research → Summarize pipeline
-/pipeline "claude:analyze,gemini:summarize" "Explain quantum computing"
-
-# Code → Test → Fix pipeline
-/pipeline "claude:code,codex:test,claude:fix" "Create a sorting function"
+# CLI: Analyze → Code → Review pipeline
+puzldai run "Build a rate limiter" -P "gemini:analyze,claude:code,codex:review" -i
 ```
 
 ## Available Actions

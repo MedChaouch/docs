@@ -7,18 +7,33 @@ Consensus mode enables multiple AI models to collaborate on a task through a str
 
 ## Usage
 
+### TUI (Interactive)
+
 ```bash
 /consensus <agents> "<prompt>"
+/settings        # configure rounds & synthesizer
 ```
+
+### CLI
+
+```bash
+puzldai consensus "<prompt>" -a <agents> [-r rounds] [-s synthesizer]
+```
+
+| Flag | Description |
+|------|-------------|
+| `-a` | Comma-separated agents to participate |
+| `-r` | Number of voting rounds (default: 2) |
+| `-s` | Agent to synthesize final result |
 
 ### Examples
 
 ```bash
-# Three-model consensus
+# TUI: Three-model consensus
 /consensus claude,gemini,codex "Design the authentication system"
 
-# Two-model consensus
-/consensus claude,gemini "Choose the best database for our use case"
+# CLI: With 3 rounds and claude as synthesizer
+puzldai consensus "Choose the best database" -a claude,gemini,ollama -r 3 -s claude
 ```
 
 ## How It Works

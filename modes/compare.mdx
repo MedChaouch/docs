@@ -7,21 +7,34 @@ Compare mode sends the same prompt to multiple AI models simultaneously and disp
 
 ## Usage
 
+### TUI (Interactive)
+
 ```bash
 /compare <agents> "<prompt>"
+/sequential      # toggle sequential execution
+/pick            # toggle LLM picks best
 ```
+
+### CLI
+
+```bash
+puzldai compare "<prompt>" -a <agents> [-s] [-p]
+```
+
+| Flag | Description |
+|------|-------------|
+| `-a` | Comma-separated agents to compare |
+| `-s` | Run sequentially instead of parallel |
+| `-p` | Have an LLM pick the best response |
 
 ### Examples
 
 ```bash
-# Compare Claude and Gemini
+# TUI: Compare Claude and Gemini
 /compare claude,gemini "Explain microservices architecture"
 
-# Compare three models
-/compare claude,gemini,codex "Write a binary search function"
-
-# Compare with Ollama
-/compare claude,ollama "What is dependency injection?"
+# CLI: Compare three models with pick mode
+puzldai compare "Write a binary search function" -a claude,gemini,ollama -p
 ```
 
 ## Features

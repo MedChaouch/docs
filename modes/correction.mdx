@@ -7,18 +7,27 @@ Correction mode implements a producer-reviewer pattern where one model generates
 
 ## Usage
 
+### TUI (Interactive)
+
 ```bash
-/correct --producer <agent> --reviewer <agent> "<prompt>"
+/correct <producer> <reviewer> "<prompt>"
+/settings        # toggle fix mode
+```
+
+### CLI
+
+```bash
+puzldai correct "<prompt>" --producer <agent> --reviewer <agent> [--fix]
 ```
 
 ### Examples
 
 ```bash
-# Claude produces, Gemini reviews
-/correct --producer claude --reviewer gemini "Write a REST API endpoint"
+# TUI: Claude produces, Gemini reviews
+/correct claude gemini "Write a REST API endpoint"
 
-# With automatic fix
-/correct --producer claude --reviewer gemini --fix "Implement binary search"
+# CLI: With automatic fix
+puzldai correct "Implement binary search" --producer claude --reviewer gemini --fix
 ```
 
 ## How It Works

@@ -1,0 +1,135 @@
+---
+title: "Autopilot Mode"
+description: "AI-generated execution plans with autonomous operation"
+---
+
+Autopilot mode lets an AI agent generate a step-by-step execution plan for complex tasks, then optionally execute it autonomously or with interactive approval at each step.
+
+## Usage
+
+### TUI (Interactive)
+
+```bash
+/autopilot "<task>"
+/planner <agent>     # set planner agent
+/execute             # toggle auto-execution
+/interactive         # toggle pause between steps
+```
+
+### CLI
+
+```bash
+puzldai autopilot "<task>" [-p planner] [-x] [-i]
+```
+
+| Flag | Description |
+|------|-------------|
+| `-p` | Agent to use for planning (default: ollama) |
+| `-x` | Execute the plan after generating |
+| `-i` | Interactive mode - prompt before each step |
+
+### Examples
+
+```bash
+# TUI: Generate and review a plan
+/autopilot "Build user authentication with JWT"
+
+# CLI: Full autonomous execution with claude as planner
+puzldai autopilot "Refactor the API layer" -p claude -x
+
+# CLI: Interactive execution (approve each step)
+puzldai autopilot "Add unit tests for utils" -p claude -x -i
+```
+
+## How It Works
+
+<Steps>
+  <Step title="Planning">
+    The planner agent analyzes the task and generates a detailed step-by-step execution plan.
+  </Step>
+  <Step title="Review">
+    You can review the plan before execution. Modify, approve, or regenerate.
+  </Step>
+  <Step title="Execution">
+    If `-x` is enabled, each step is executed in sequence. With `-i`, you approve each step.
+  </Step>
+</Steps>
+
+## Configuration
+
+### Planner Agent
+
+Set which agent creates the execution plan:
+
+```bash
+# TUI
+/planner claude
+
+# CLI
+puzldai autopilot "task" -p claude
+```
+
+### Execution Mode
+
+Control how the plan is executed:
+
+| Mode | Description |
+|------|-------------|
+| Plan only | Generate plan without executing (default) |
+| Auto-execute (`-x`) | Execute all steps automatically |
+| Interactive (`-x -i`) | Pause and confirm before each step |
+
+## Actions After Planning
+
+After the plan is generated, you can:
+
+| Action | Description |
+|--------|-------------|
+| **Execute** | Run the plan (same as `-x`) |
+| **Edit** | Modify the task and regenerate |
+| **Retry** | Generate a new plan |
+| **Cancel** | Discard the plan |
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `Escape` | Hide view (keeps running) |
+| `Ctrl+E` | Return to autopilot view |
+| `Ctrl+C` | Cancel operation |
+| `Enter` | Approve step (interactive mode) |
+| `Space` | Skip to next step |
+
+## Example Output
+
+```
+─── Autopilot ───
+
+Planner: claude
+Task: Build user authentication with JWT
+
+Generated Plan:
+━━━━━━━━━━━━━━━━
+1. Create auth middleware in src/middleware/auth.ts
+2. Implement JWT token generation in src/utils/jwt.ts
+3. Add login endpoint in src/routes/auth.ts
+4. Add register endpoint in src/routes/auth.ts
+5. Create user model in src/models/user.ts
+6. Add password hashing utility
+
+[Execute] [Edit] [Retry] [Cancel]
+```
+
+## Tips
+
+<Tip>
+**Use Claude for complex planning** - Claude excels at breaking down complex tasks into logical steps.
+</Tip>
+
+<Tip>
+**Start with interactive mode** - Use `-x -i` to review each step before it runs, especially for unfamiliar tasks.
+</Tip>
+
+<Warning>
+**Review generated plans carefully** - Always verify the plan makes sense before enabling auto-execution.
+</Warning>
