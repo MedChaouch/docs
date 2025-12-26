@@ -54,7 +54,6 @@
             "pages": [
               "commands/tui",
               "commands/cli",
-              "commands/workflows",
               "commands/settings"
             ]
           }

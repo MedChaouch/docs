@@ -20,6 +20,12 @@ Debate mode facilitates structured discussions between AI models, allowing them 
 puzldai debate "<topic>" -a <agents> [-r rounds] [-m moderator]
 ```
 
+| Flag | Description |
+|------|-------------|
+| `-a` | Comma-separated agents to debate (required) |
+| `-r` | Number of debate rounds (default: 2) |
+| `-m` | Agent to synthesize the conclusion |
+
 ### Examples
 
 ```bash
@@ -49,22 +55,20 @@ puzldai debate "Monolith vs microservices" -a claude,gemini,codex -r 3 -m ollama
 
 ## Configuration
 
-### Rounds
+### TUI Settings
 
-The `--rounds` parameter controls how many rounds of debate occur:
+Configure debate options via `/settings` → Collaboration tab:
 
-```bash
-/debate claude,gemini --rounds 3 "topic"
-```
+| Setting | Description |
+|---------|-------------|
+| Rounds | Number of debate rounds (1-5, default: 2) |
+| Moderator | Agent to synthesize conclusion (default: none) |
 
-More rounds allow deeper exploration but take longer.
-
-### Moderator
-
-Add a moderator to synthesize the final conclusion:
+### CLI Flags
 
 ```bash
-/debate claude,gemini --rounds 2 --moderator codex "topic"
+# 3 rounds with ollama as moderator
+puzldai debate "GraphQL vs REST" -a claude,gemini -r 3 -m ollama
 ```
 
 ## When to Use Debate

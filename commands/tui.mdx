@@ -78,14 +78,36 @@ When prompted for permission:
 | Command | Description |
 |---------|-------------|
 | `/index` | Open indexing panel |
+| `/index full` | Full index with embeddings |
+| `/index quick` | Quick index (no embeddings) |
 | `/index search "query"` | Search indexed code |
+| `/index context "task"` | Get relevant code for task |
+| `/index config` | Show project configuration |
+| `/index graph` | Show dependency graph |
+
+## Cloud / MCP
+
+| Command | Description |
+|---------|-------------|
+| `/login [token]` | Login to PuzldAI cloud |
+| `/logout` | Logout from cloud |
+| `/mcp` | Show MCP connection status |
+
+## Observations
+
+| Command | Description |
+|---------|-------------|
+| `/observe` | Open observations panel |
+| `/observe summary` | Show observation stats |
+| `/observe list` | List recent observations |
+| `/observe export [path]` | Export to file |
+| `/observe preferences` | Export DPO pairs |
 
 ## Other
 
 | Command | Description |
 |---------|-------------|
 | `/settings` | Open settings panel |
-| `/observe` | Open observations panel |
 | `/changelog` | Show version history |
 | `/help` | Show all commands |
 | `/clear` | Clear chat history |

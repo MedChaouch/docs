@@ -44,20 +44,34 @@ puzldai correct "Implement binary search" --producer claude --reviewer gemini --
   </Step>
 </Steps>
 
-## Options
+## Configuration
 
-| Option | Description |
-|--------|-------------|
-| `--producer` | Agent that generates the initial output |
-| `--reviewer` | Agent that reviews and critiques |
-| `--fix` | Enable automatic fix based on review |
+### TUI Settings
+
+Configure fix mode via `/settings` → Collaboration tab:
+
+| Setting | Description |
+|---------|-------------|
+| Fix | Enable automatic fix after review (default: off) |
+
+### CLI Flags
+
+| Flag | Description |
+|------|-------------|
+| `--producer` | Agent that generates the initial output (required) |
+| `--reviewer` | Agent that reviews and critiques (required) |
+| `--fix` or `-f` | Enable automatic fix based on review |
 
 ## Use Cases
 
 ### Code Review
 
 ```bash
-/correct --producer claude --reviewer codex "Implement a cache class"
+# TUI
+/correct claude codex "Implement a cache class"
+
+# CLI
+puzldai correct "Implement a cache class" --producer claude --reviewer codex --fix
 ```
 
 The reviewer checks for:
@@ -69,7 +83,11 @@ The reviewer checks for:
 ### Writing Review
 
 ```bash
-/correct --producer gemini --reviewer claude "Write documentation for the API"
+# TUI
+/correct gemini claude "Write documentation for the API"
+
+# CLI
+puzldai correct "Write documentation for the API" --producer gemini --reviewer claude
 ```
 
 The reviewer evaluates:
@@ -80,7 +98,11 @@ The reviewer evaluates:
 ### Fact Checking
 
 ```bash
-/correct --producer ollama --reviewer claude "Explain how SSL/TLS works"
+# TUI
+/correct ollama claude "Explain how SSL/TLS works"
+
+# CLI
+puzldai correct "Explain how SSL/TLS works" --producer ollama --reviewer claude
 ```
 
 The reviewer verifies:

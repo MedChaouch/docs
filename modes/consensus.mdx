@@ -52,13 +52,22 @@ puzldai consensus "Choose the best database" -a claude,gemini,ollama -r 3 -s cla
 
 ## Configuration
 
-### Voting Rounds
+### TUI Settings
 
-By default, consensus runs 2 voting rounds. The number of rounds affects how much deliberation occurs before synthesis.
+Configure consensus options via `/settings` → Collaboration tab:
 
-### Synthesizer
+| Setting | Description |
+|---------|-------------|
+| Rounds | Number of voting rounds (1-5, default: 2) |
+| Synthesizer | Agent to synthesize final result (default: auto/first agent) |
 
-By default, the first agent in the list synthesizes the final result. You can specify a different synthesizer if needed.
+### CLI Flags
+
+| Flag | Description |
+|------|-------------|
+| `-a` | Comma-separated agents to participate (required) |
+| `-r` | Number of voting rounds (default: 2) |
+| `-s` | Agent to synthesize final result |
 
 ## Actions After Consensus
 
@@ -66,10 +75,9 @@ After consensus completes, you can:
 
 | Action | Description |
 |--------|-------------|
-| **Accept** | Use the synthesized solution |
-| **Build** | Enter Build mode to implement the solution |
-| **Retry** | Run consensus again with the same task |
-| **Edit** | Modify the task and run again |
+| **Build** | Enter Build mode to implement the synthesized solution |
+| **Continue** | Accept the result and continue chatting |
+| **Reject** | Discard the result |
 
 ## Project Context
 

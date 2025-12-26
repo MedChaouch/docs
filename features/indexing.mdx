@@ -10,20 +10,22 @@ PuzldAI can index your entire codebase for intelligent context injection and sem
 ```bash
 # TUI
 /index              # Open indexing panel
-/index context      # Index current directory
+/index full         # Full index with embeddings
+/index quick        # Quick index without embeddings
 /index search "auth" # Search indexed code
 ```
 
-## Index Panel
+## TUI Commands
 
-Access with `/index` in the TUI:
-
-| Option | Description |
-|--------|-------------|
-| **Context** | Full index with AST parsing and embeddings |
-| **Config** | Detect project configuration files |
-| **Graph** | Build dependency graph |
-| **Search** | Search indexed code semantically |
+| Command | Description |
+|---------|-------------|
+| `/index` | Open interactive indexing panel |
+| `/index full` | Full index with AST parsing and embeddings |
+| `/index quick` | Quick index without embeddings |
+| `/index search <query>` | Search indexed code semantically |
+| `/index context <task>` | Get relevant code for a task |
+| `/index config` | Show detected project configuration |
+| `/index graph` | Show dependency graph |
 
 ## What Gets Indexed
 
@@ -84,12 +86,11 @@ When you ask questions or request changes, PuzldAI automatically:
 
 ## Storage
 
-Index data is cached locally:
+Index embeddings are stored in the vector store (part of the memory system):
 
 ```
 ~/.puzldai/
-├── index/           # Cached index data
-└── embeddings/      # Vector embeddings
+└── puzldai.db       # SQLite database with vector embeddings
 ```
 
-Re-indexing only processes changed files.
+Indexing runs on-demand. Use `/index full` for complete re-indexing with embeddings, or `/index quick` for faster AST-only parsing.

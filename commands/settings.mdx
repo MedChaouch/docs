@@ -85,14 +85,36 @@ puzldai index --config            # Show project config
 puzldai index --graph             # Show dependency graph
 ```
 
+### Observations
+
+```bash
+puzldai observe summary           # Show stats
+puzldai observe list              # List recent
+puzldai observe export data.jsonl # Export to file
+```
+
+### Server
+
+```bash
+puzldai serve                     # API server
+puzldai serve -p 8080             # Custom port
+puzldai serve --mcp               # MCP bridge mode
+puzldai serve -w                  # With web terminal
+```
+
+### Auth
+
+```bash
+puzldai login                     # Login to cloud
+puzldai logout                    # Logout
+puzldai whoami                    # Show login status
+```
+
 ### Other
 
 ```bash
 puzldai check                     # Agent status
 puzldai agent                     # Interactive agent mode
-puzldai serve                     # API server
-puzldai serve -p 8080             # Custom port
-puzldai serve -w                  # With web terminal
 ```
 
 ## Keyboard Shortcuts (TUI)

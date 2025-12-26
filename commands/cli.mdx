@@ -404,7 +404,7 @@ puzldai observe export data.csv -f csv -a claude
 
 ### puzldai serve
 
-Start the API server.
+Start the API server or MCP bridge.
 
 ```bash
 puzldai serve [options]
@@ -414,6 +414,7 @@ puzldai serve [options]
 |--------|-------------|
 | `-p, --port <port>` | Port to listen on (default: 3000) |
 | `-H, --host <host>` | Host to bind to (default: 0.0.0.0) |
+| `--mcp` | Start as MCP bridge (connects to puzld.cc) |
 | `-w, --web` | Also start ttyd web terminal |
 | `-t, --terminal-port <port>` | Terminal port (default: 3001) |
 
@@ -421,5 +422,36 @@ puzldai serve [options]
 ```bash
 puzldai serve
 puzldai serve -p 8080
+puzldai serve --mcp
 puzldai serve -w -t 3001
+```
+
+---
+
+## Auth Commands
+
+### puzldai login
+
+Login to PuzldAI cloud.
+
+```bash
+puzldai login
+```
+
+Opens a browser for authentication. After login, a token is saved to `~/.puzldai/config.json`.
+
+### puzldai logout
+
+Logout from PuzldAI cloud.
+
+```bash
+puzldai logout
+```
+
+### puzldai whoami
+
+Show current login status.
+
+```bash
+puzldai whoami
 ```

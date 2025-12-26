@@ -65,18 +65,21 @@ puzldai run "Build a rate limiter" -P "gemini:analyze,claude:code,codex:review" 
 
 ## Saved Workflows
 
-Save frequently used pipelines as workflows:
+Create and manage workflows through the `/workflows` interactive interface:
 
 ```bash
-# Save a workflow
-/workflow save code-review "gemini:analyze,claude:code,codex:review"
+# Open workflow manager (create, edit, delete workflows)
+/workflows
 
 # Run a saved workflow
 /workflow code-review "Build user authentication"
-
-# List saved workflows
-/workflows
 ```
+
+The `/workflows` manager lets you:
+- Create new workflows with custom pipeline steps
+- Edit existing workflow pipelines
+- Delete workflows you no longer need
+- View workflow details and step configuration
 
 ## Interactive Mode
 

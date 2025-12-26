@@ -24,10 +24,12 @@ PuzldAI includes a memory system that stores conversations, decisions, and code 
 
 ## Storage
 
+All memory data is stored in the main database:
+
 ```
 ~/.puzldai/
-├── memory.db        # SQLite FTS5 for memories
-└── sessions/        # Chat history
+├── puzldai.db       # SQLite database (memories, sessions, observations)
+└── sessions/        # Legacy JSON session files
 ```
 
 ## Embedding Models

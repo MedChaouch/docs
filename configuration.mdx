@@ -88,9 +88,9 @@ PuzldAI stores data in `~/.puzldai/`:
 ```
 ~/.puzldai/
 ├── config.json      # User preferences
-├── memory.db        # SQLite memory database
-├── sessions.db      # Chat session history
-└── observations.db  # Training data observations
+├── puzldai.db       # SQLite database (sessions, memory, observations)
+├── sessions/        # Legacy JSON session files
+└── templates/       # Saved workflow templates
 ```
 
 ## Project Instructions
@@ -100,6 +100,6 @@ PuzldAI auto-injects project instructions into prompts:
 | File | Purpose |
 |------|---------|
 | `AGENTS.md` | Project-wide instructions |
-| `CLAUDE.md`, `CODEX.md` | Agent-specific instructions |
-| `.cursorrules` | IDE rules (also supported) |
-| `.puzldai/agents/*.md` | Per-agent custom instructions |
+| `CLAUDE.md`, `CODEX.md`, etc. | Agent-specific instructions (root level) |
+| `.cursorrules` | Cursor IDE rules (also supported) |
+| `.puzldai/claude.md`, `.puzldai/gemini.md` | Per-agent custom instructions |
